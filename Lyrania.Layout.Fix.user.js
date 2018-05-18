@@ -61,6 +61,7 @@
     addGlobalStyle('#headerContents > ul { width: 8.5%; list-style: none; display: inline-block; padding-left: 5px; float: left; }');
     addGlobalStyle('@media screen and (max-width: 1280px) {  #main { max-width: 700px; } }');
     addGlobalStyle('@media screen and (max-width: 1366px) {  #main { max-width: 749px; } }');
+    addGlobalStyle('@media screen and (max-width: 1680px) {  #main { max-width: 1010px; } }');
     addGlobalStyle('@media screen and (max-width: 1920px) {  #main { max-width: 1237px; } }');
     }
 
