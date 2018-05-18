@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Lyrania CSS Layout Fix
-// @version      0.1.7
+// @version      0.1.8
 // @description  HTML and CSS changes to allow for easier layout and color changes.
 // @author       Vibblez
 // @updateURL	 https://raw.githubusercontent.com/Vibblez/Lyrania/master/Lyrania.Layout.Fix.user.js
