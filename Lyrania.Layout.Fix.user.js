@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Lyrania CSS Layout Fix
-// @version      0.1.2
+// @version      0.1.3
 // @description  HTML and CSS changes to allow for easier layout and color changes.
 // @author       Vibblez
 // @updateURL	 https://raw.githubusercontent.com/Vibblez/Lyrania/master/Lyrania.Layout.Fix.user.js
@@ -39,5 +39,6 @@
 
     addGlobalStyle('#mainnav { margin: 5px; } ');
 
-addGlobalStyle(' #bannerholder: border: 1px solid #ffffff;background-color: #000000;background-image: none;background-size: 100%;background-origin: content;width: 100%;max-width: fit-content;margin-top: 5px;} #bannerholder { position: relative; left: auto; right: auto; z-index: 8;'); 
+addGlobalStyle(' #bannerholder: border: 1px solid #ffffff;background-color: #000000;background-image: none;background-size: 100%;background-origin: content;width: 100%;max-width: fit-content;margin-top: 5px;} #bannerholder { position: relative; left: auto; right: auto; z-index: 8;');
+    addGlobalStyle('#loadoutspacer {    float: right;    width: 0px;    height: 185px; }');
 })();
