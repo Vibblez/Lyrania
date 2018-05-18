@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Lyrania CSS Layout Fix
-// @version      0.1
+// @version      0.1.2
 // @description  HTML and CSS changes to allow for easier layout and color changes.
 // @author       Vibblez
-// @updateURL
+// @updateURL	 https://raw.githubusercontent.com/Vibblez/Lyrania/master/Lyrania.Layout.Fix.user.js
 // @match        https://lyrania.co.uk/game.php
 // @require      http://code.jquery.com/jquery-3.3.1.min.js
 // ==/UserScript==
@@ -38,4 +38,6 @@
     addGlobalStyle('#popupholder {    position: fixed;    left: auto;    right: auto;    top: 50px;    bottom: auto;    z-index: 10;    width: 800px;    margin-left: 100px;    height: 570px;    text-align: center;    overflow: auto; }');
 
     addGlobalStyle('#mainnav { margin: 5px; } ');
+
+addGlobalStyle(' #bannerholder: border: 1px solid #ffffff;background-color: #000000;background-image: none;background-size: 100%;background-origin: content;width: 100%;max-width: fit-content;margin-top: 5px;} #bannerholder { position: relative; left: auto; right: auto; z-index: 8;'); 
 })();
