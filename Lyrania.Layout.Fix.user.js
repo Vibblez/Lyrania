@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Lyrania CSS Layout Fix
-// @version      0.1.8
-// @description  HTML and CSS changes to allow for easier layout and color changes.
+// @name         Lyrania 
+// @version      0.1.9
+// @description  HTML and CSS changes to allow for easier layout changes, and a quick menu for some other stuff.
 // @author       Vibblez
 // @updateURL	 https://raw.githubusercontent.com/Vibblez/Lyrania/master/Lyrania.Layout.Fix.user.js
 // @match        https://lyrania.co.uk/game.php
@@ -10,6 +10,10 @@
 
 (function() {
 'use strict';
+
+    //////////
+    // Dark Theme
+    //////////
 
     var addMiddle = "<div id='middle'></div>";
     $(addMiddle).insertAfter('#header');
@@ -39,10 +43,10 @@
 	addGlobalStyle('#holder { width: 95%; min-width: 1000px; }');
 	addGlobalStyle('#header { position: relative; margin-top: 10px; border-radius: 5px; border: 0px; border-top: 1px #fff solid; border-bottom: 1px #fff solid; width: 100%; max-width: 100%; background-image: none; background-color: #111; }');
     addGlobalStyle('#header > ul > li, #unreadmail, #opentickets, #side1 > span,  { font-size: 11px; }');
-	addGlobalStyle('#main { position: relative; border: 0px; border-top: 1px #fff solid; border-bottom: 1px #fff solid; float: left; top: auto; left: auto; margin: 0px; margin-top: 10px; width: 70%; min-width:550px;max-width: 1238px; background-image: none; background-color: #111; }');
+	addGlobalStyle('#main { position: relative; border: 0px; border-top: 1px #fff solid; border-bottom: 1px #fff solid; float: left; top: auto; left: auto; margin: 0px; margin-top: 10px; width: 59%; background-image: none; background-color: #111; }');
     addGlobalStyle('#middle { width: 100%; } ');
-    addGlobalStyle('#side1 { position: relative; border-radius: 15px 0px 0px 15px;border: 1px solid;border-right: 0;top: auto;float: left;margin: 0px;margin-top: 10px;width: 20%;max-width: 280px;background-image: none; background-color: #222; }');
-	addGlobalStyle('#side2 { border: solid 1px #fff;border-left: 0px;position: relative;border-radius: 0px 15px 15px 0px;float: left;left: auto;bottom: auto;margin: 0px;margin-top: 10px;width: 20%;max-width: 280px; background-image: none; background-color: #222; }');
+    addGlobalStyle('#side1 { position: relative; border-radius: 15px 0px 0px 15px;border: 1px solid;border-right: 0;top: auto;float: left;margin: 0px;margin-top: 10px;width: 20%;background-image: none; background-color: #222; }');
+	addGlobalStyle('#side2 { border: solid 1px #fff;border-left: 0px;position: relative;border-radius: 0px 15px 15px 0px;float: left;left: auto;bottom: auto;margin: 0px;margin-top: 10px;width: 20%; background-image: none; background-color: #222; }');
 	addGlobalStyle('#chat { position: relative; margin-top: 10px; width: 100%; float: left; border-radius: 5px; top: 0; padding: 10px 10px 15px 10px; max-width: fit-content; }');
 	addGlobalStyle('#chatwindow { padding: 5px; width: 100%; position: relative; left: auto; top: 0; max-width: fit-content; margin-top: 10px; }');
 	addGlobalStyle('#inputchat, #chatbutton, input, select { background-image: none; background-color: #111; }');
@@ -55,7 +59,7 @@
 	addGlobalStyle('#content > div > div { font-size: 12px; }');
 	addGlobalStyle('#popupholder { border: 1px solid #fff; background-image: none; background-color: #080808; }');
     addGlobalStyle('#headerContents { width: 100%; } ');
-    addGlobalStyle('#headerContents > ul:nth-of-type(odd) { width: 4%; min-width: 56px; }');
+    addGlobalStyle('#headerContents > ul:nth-of-type(odd) { width: 5%; min-width: 56px; }');
     addGlobalStyle('#headerContents > ul:nth-of-type(even) { width: 10%; min-width: 110px; }');
     addGlobalStyle('#headerContents > ul:nth-of-type(9) { width: 10%; min-width: 170px; float: right; }');
     addGlobalStyle('#headerContents > ul { width: 8.5%; list-style: none; display: inline-block; padding-left: 5px; float: left; }');
@@ -67,7 +71,78 @@
 
     runAllStyleAdds();
 
-    $(window).resize(function () {
-      runAllStyleAdds();
-    });
+    //////
+    // QUICK MENU
+    //////
+
+    function bindEquipLink(){
+        $('.vibblez-equip').click(function(){
+            vibblezloadout();
+        });
+    }
+
+    function bindPetBtn(){
+        $('#vib-changepet').click(function(){
+            vibblezchangepet();
+        });
+    }
+
+    var test = function () {
+        console.log("Function loaded");
+    }
+
+    var vibblezloadout = function () {
+        var i = $("#vibblez-loadout").val();
+        console.log(i);
+        $.post( "loadout.php", { x:2, y: i})
+            .done(function( data ) {
+            console.log("Equipment changed");
+        });
+    }
+
+    var AddPetMenu = function () {
+        $.get('pet.php', function(data) {
+            console.log(data);
+            var petList = $(data)[0];
+            console.log(petList);
+            petList = $(petList).attr("id","vibpet");
+            petList = $(petList).removeAttr("onchange");
+            petList = $(petList).removeAttr("style");
+            console.log(petList);
+            var petMenu = $("<div id='vibpetmenu' style='padding-top: 30px; padding-left: 10px;'><div>");
+            var changeBtn = $("<input type='button' value='Swap Pet' id='vib-changepet'>");
+            petMenu.append(petList);
+            petMenu.append(changeBtn);
+            $("#VibblezMenu").append(petMenu);
+            bindPetBtn();
+        });
+    }
+
+    var vibblezchangepet = function () {
+        $.post('petselect.php', {x: $("#vibpet").val(), y: 0})
+        .done(function(data){
+            $.post('pet.php').done(function(data){
+                eval(data.split('[BREAK]')[1]);
+            });
+        });
+    }
+
+    var AddPotionAndJewelStuff = function () {
+        $.get('loadoutpotions.php', function(data) {
+            data = data.replace('<div id="loadoutspacer"></div>','');
+            data = data.replace("<a href = 'javascript:loadout(2);'>", "<a href = 'javascript:;' class='vibblez-equip'>");
+            data = data.replace("<select id = 'loadout'>", "<select id = 'vibblez-loadout'>");
+            $("#VibblezMenu").append(data);
+            bindEquipLink();
+        });
+    }
+
+    var NewMenu = function () {
+        var menu = $("<div id='VibblezMenu' style='    border: 1px solid #fff;    background: #000;    height: 110px;    position: relative;    width: 100%;    float: left;    margin-top: 10px;'><span style='position: absolute;top: 0;left: 0;padding: 5px;font-size: 14;font-weight: bold;'>Vibblez Quick Menu</span></div>");
+        $(menu).insertAfter("#chat");
+        AddPotionAndJewelStuff();
+        AddPetMenu();
+    }
+
+    NewMenu();
 })();
