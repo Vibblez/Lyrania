@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Lyrania 
-// @version      0.1.9
+// @version      0.2.0
 // @description  HTML and CSS changes to allow for easier layout changes, and a quick menu for some other stuff.
 // @author       Vibblez
 // @updateURL	 https://raw.githubusercontent.com/Vibblez/Lyrania/master/Lyrania.Layout.Fix.user.js
@@ -15,17 +15,17 @@
     // Dark Theme
     //////////
 
-    var addMiddle = "<div id='middle'></div>";
-    $(addMiddle).insertAfter('#header');
-    $('#main').append( $('#middle') );
-    $('#side1').insertBefore( $('#main') );
-    $('#side2').append( $('#middle') );
-    $('#header > ul').removeAttr("style");
-    var addHeaderContents = "<div id='headerContents'></div>";
-    $(addHeaderContents).prependTo("#header");
-    $("#header > ul").each(function(){
-        $("#headerContents").append(this);
-    });
+    function htmlFix (){
+        $("<div id='middle'></div>").insertAfter('#header');
+        $('#main').append( $('#middle') );
+        $('#side1').insertBefore( $('#main') );
+        $('#side2').append( $('#middle') );
+        $("<div id='headerContents'></div>").prependTo("#header");
+        $("#header > ul").each(function(e){
+            $(this).removeAttr('style');
+            $("#headerContents").append($(this));
+        });
+    }
 
 	function addGlobalStyle(css) {
 		var head, style;
@@ -42,13 +42,13 @@
 	addGlobalStyle('select { height: 25px }');
 	addGlobalStyle('#holder { width: 95%; min-width: 1000px; }');
 	addGlobalStyle('#header { position: relative; margin-top: 10px; border-radius: 5px; border: 0px; border-top: 1px #fff solid; border-bottom: 1px #fff solid; width: 100%; max-width: 100%; background-image: none; background-color: #111; }');
-    addGlobalStyle('#header > ul > li, #unreadmail, #opentickets, #side1 > span,  { font-size: 11px; }');
+    addGlobalStyle('#header > #headerContents > ul > li, #unreadmail, #opentickets, #side1 > span,  { font-size: 11px; }');
 	addGlobalStyle('#main { position: relative; border: 0px; border-top: 1px #fff solid; border-bottom: 1px #fff solid; float: left; top: auto; left: auto; margin: 0px; margin-top: 10px; width: 59%; background-image: none; background-color: #111; }');
     addGlobalStyle('#middle { width: 100%; } ');
     addGlobalStyle('#side1 { position: relative; border-radius: 15px 0px 0px 15px;border: 1px solid;border-right: 0;top: auto;float: left;margin: 0px;margin-top: 10px;width: 20%;background-image: none; background-color: #222; }');
 	addGlobalStyle('#side2 { border: solid 1px #fff;border-left: 0px;position: relative;border-radius: 0px 15px 15px 0px;float: left;left: auto;bottom: auto;margin: 0px;margin-top: 10px;width: 20%; background-image: none; background-color: #222; }');
-	addGlobalStyle('#chat { position: relative; margin-top: 10px; width: 100%; float: left; border-radius: 5px; top: 0; padding: 10px 10px 15px 10px; max-width: fit-content; }');
-	addGlobalStyle('#chatwindow { padding: 5px; width: 100%; position: relative; left: auto; top: 0; max-width: fit-content; margin-top: 10px; }');
+	addGlobalStyle('#chat { position: relative; margin-top: 10px; width: 100%; float: left; border-radius: 5px; top: 0; padding: 10px 10px 15px 10px; max-width: fit-content; height: auto; }');
+	addGlobalStyle('#chatwindow { padding: 5px; width: 100%; position: relative; left: auto; top: 0; max-width: fit-content; margin-top: 10px; resize: vertical; height: 250px; }');
 	addGlobalStyle('#inputchat, #chatbutton, input, select { background-image: none; background-color: #111; }');
 	addGlobalStyle('#inputchat { width: 70% } ');
 	addGlobalStyle('#popupholder { position: fixed;    left: auto;    right: auto;    top: 50px;    bottom: auto;    z-index: 10;    width: 800px;    margin-left: 100px;    height: 570px;    text-align: center;    overflow: auto; }');
@@ -58,7 +58,7 @@
 	addGlobalStyle('#content { padding-left: 5px; padding-right: 5px; } ');
 	addGlobalStyle('#content > div > div { font-size: 12px; }');
 	addGlobalStyle('#popupholder { border: 1px solid #fff; background-image: none; background-color: #080808; }');
-    addGlobalStyle('#headerContents { width: 100%; } ');
+    addGlobalStyle('#headerContents { width: 100%; height: inherit; } ');
     addGlobalStyle('#headerContents > ul:nth-of-type(odd) { width: 5%; min-width: 56px; }');
     addGlobalStyle('#headerContents > ul:nth-of-type(even) { width: 10%; min-width: 110px; }');
     addGlobalStyle('#headerContents > ul:nth-of-type(9) { width: 10%; min-width: 170px; float: right; }');
@@ -68,8 +68,6 @@
     addGlobalStyle('@media screen and (max-width: 1680px) {  #main { max-width: 1010px; } }');
     addGlobalStyle('@media screen and (max-width: 1920px) {  #main { max-width: 1237px; } }');
     }
-
-    runAllStyleAdds();
 
     //////
     // QUICK MENU
@@ -87,10 +85,6 @@
         });
     }
 
-    var test = function () {
-        console.log("Function loaded");
-    }
-
     var vibblezloadout = function () {
         var i = $("#vibblez-loadout").val();
         console.log(i);
@@ -102,13 +96,10 @@
 
     var AddPetMenu = function () {
         $.get('pet.php', function(data) {
-            console.log(data);
             var petList = $(data)[0];
-            console.log(petList);
             petList = $(petList).attr("id","vibpet");
             petList = $(petList).removeAttr("onchange");
             petList = $(petList).removeAttr("style");
-            console.log(petList);
             var petMenu = $("<div id='vibpetmenu' style='padding-top: 30px; padding-left: 10px;'><div>");
             var changeBtn = $("<input type='button' value='Swap Pet' id='vib-changepet'>");
             petMenu.append(petList);
@@ -144,5 +135,11 @@
         AddPetMenu();
     }
 
+
+    //////
+    // Init
+    //////
+    htmlFix();
     NewMenu();
+    runAllStyleAdds();
 })();
