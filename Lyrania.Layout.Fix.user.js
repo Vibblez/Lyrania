@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Lyrania 
-// @version      0.2.2
+// @version      0.2.3
 // @description  HTML and CSS changes to allow for easier layout changes, and a quick menu for some other stuff.
 // @author       Vibblez
 // @updateURL	 https://raw.githubusercontent.com/Vibblez/Lyrania/master/Lyrania.Layout.Fix.user.js
@@ -47,8 +47,8 @@
     addGlobalStyle('#mainContainer { position: relative; float: left;   width: 59%;    background-color: #111;    margin-top: 10px;    height: 370px;    border-top: 1px white solid;    border-bottom: 1px white solid; }');
 	addGlobalStyle('#main { position: relative; border: 0px; background-image: none; background-color: #111; top: 0; left:0; margin-left: auto;    margin-right: auto; }');
     addGlobalStyle('#middle { width: 100%; } ');
-    addGlobalStyle('#side1 { position: relative; border-radius: 15px 0px 0px 15px;border: 1px solid;border-right: 0;top: auto;float: left;margin: 0px;margin-top: 10px;width: 20%;background-image: none; background-color: #222; }');
-	addGlobalStyle('#side2 { border: solid 1px #fff;border-left: 0px;position: relative;border-radius: 0px 15px 15px 0px;float: left;left: auto;bottom: auto;margin: 0px;margin-top: 10px;width: 20%; background-image: none; background-color: #222; }');
+    addGlobalStyle('#side1 { position: relative; border-radius: 5px 0px 0px 5px;border: 1px solid;border-right: 0;top: auto;float: left;margin: 0px;margin-top: 10px;width: 20%;background-image: none; background-color: #222; }');
+	addGlobalStyle('#side2 { border: solid 1px #fff;border-left: 0px;position: relative;border-radius: 0px 5px 5px 0px;float: left;left: auto;bottom: auto;margin: 0px;margin-top: 10px;width: 20%; background-image: none; background-color: #222; }');
 	addGlobalStyle('#chat { position: relative; margin-top: 10px; width: 100%; float: left; border-radius: 5px; top: 0; padding: 10px 10px 15px 10px; max-width: fit-content; height: auto; }');
 	addGlobalStyle('#chatwindow { padding: 5px; width: 100%; position: relative; left: auto; top: 0; max-width: fit-content; margin-top: 10px; resize: vertical; height: 250px; }');
 	addGlobalStyle('#inputchat, #chatbutton, input, select { background-image: none; background-color: #111; }');
@@ -127,7 +127,7 @@
     }
 
     var NewMenu = function () {
-        var menu = $("<div id='VibblezMenu' style='    border: 1px solid #fff;    background: #000;    height: 110px;    position: relative;    width: 100%;    float: left;    margin-top: 10px;'><span style='position: absolute;top: 0;left: 0;padding: 5px;font-size: 14;font-weight: bold;'>Vibblez Quick Menu</span></div>");
+        var menu = $("<div id='VibblezMenu' style=' border-radius:5px;   border: 1px solid #fff;    background: #000;    height: 110px;    position: relative;    width: 100%;    float: left;    margin-top: 10px;'><span style='position: absolute;top: 0;left: 0;padding: 5px;font-size: 14;font-weight: bold;'>Vibblez Quick Menu</span></div>");
         $(menu).insertAfter("#chat");
         AddPotionAndJewelStuff();
         AddPetMenu();
