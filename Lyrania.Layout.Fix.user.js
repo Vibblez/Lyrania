@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Lyrania 
-// @version      0.2.0
+// @version      0.2.2
 // @description  HTML and CSS changes to allow for easier layout changes, and a quick menu for some other stuff.
 // @author       Vibblez
 // @updateURL	 https://raw.githubusercontent.com/Vibblez/Lyrania/master/Lyrania.Layout.Fix.user.js
@@ -17,9 +17,10 @@
 
     function htmlFix (){
         $("<div id='middle'></div>").insertAfter('#header');
-        $('#main').append( $('#middle') );
-        $('#side1').insertBefore( $('#main') );
-        $('#side2').append( $('#middle') );
+        $("<div id='mainContainer'></div>").appendTo($("#middle"));
+        $('#main').appendTo($('#mainContainer'));
+        $('#side1').insertBefore($('#mainContainer'));
+        $('#side2').appendTo($('#middle'));
         $("<div id='headerContents'></div>").prependTo("#header");
         $("#header > ul").each(function(e){
             $(this).removeAttr('style');
@@ -43,7 +44,8 @@
 	addGlobalStyle('#holder { width: 95%; min-width: 1000px; }');
 	addGlobalStyle('#header { position: relative; margin-top: 10px; border-radius: 5px; border: 0px; border-top: 1px #fff solid; border-bottom: 1px #fff solid; width: 100%; max-width: 100%; background-image: none; background-color: #111; }');
     addGlobalStyle('#header > #headerContents > ul > li, #unreadmail, #opentickets, #side1 > span,  { font-size: 11px; }');
-	addGlobalStyle('#main { position: relative; border: 0px; border-top: 1px #fff solid; border-bottom: 1px #fff solid; float: left; top: auto; left: auto; margin: 0px; margin-top: 10px; width: 59%; background-image: none; background-color: #111; }');
+    addGlobalStyle('#mainContainer { position: relative; float: left;   width: 59%;    background-color: #111;    margin-top: 10px;    height: 370px;    border-top: 1px white solid;    border-bottom: 1px white solid; }');
+	addGlobalStyle('#main { position: relative; border: 0px; background-image: none; background-color: #111; top: 0; left:0; margin-left: auto;    margin-right: auto; }');
     addGlobalStyle('#middle { width: 100%; } ');
     addGlobalStyle('#side1 { position: relative; border-radius: 15px 0px 0px 15px;border: 1px solid;border-right: 0;top: auto;float: left;margin: 0px;margin-top: 10px;width: 20%;background-image: none; background-color: #222; }');
 	addGlobalStyle('#side2 { border: solid 1px #fff;border-left: 0px;position: relative;border-radius: 0px 15px 15px 0px;float: left;left: auto;bottom: auto;margin: 0px;margin-top: 10px;width: 20%; background-image: none; background-color: #222; }');
@@ -63,10 +65,6 @@
     addGlobalStyle('#headerContents > ul:nth-of-type(even) { width: 10%; min-width: 110px; }');
     addGlobalStyle('#headerContents > ul:nth-of-type(9) { width: 10%; min-width: 170px; float: right; }');
     addGlobalStyle('#headerContents > ul { width: 8.5%; list-style: none; display: inline-block; padding-left: 5px; float: left; }');
-    addGlobalStyle('@media screen and (max-width: 1280px) {  #main { max-width: 700px; } }');
-    addGlobalStyle('@media screen and (max-width: 1366px) {  #main { max-width: 749px; } }');
-    addGlobalStyle('@media screen and (max-width: 1680px) {  #main { max-width: 1010px; } }');
-    addGlobalStyle('@media screen and (max-width: 1920px) {  #main { max-width: 1237px; } }');
     }
 
     //////
